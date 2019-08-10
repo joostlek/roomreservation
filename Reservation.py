@@ -51,6 +51,10 @@ def format_time(time_to_format: time) -> str:
     return res
 
 
+def choose_best_room(options: list) -> Option:
+    return options[0]
+
+
 class Reservation:
     def __init__(self, arguments: dict, debug: bool = False):
         options = Options()
@@ -123,7 +127,7 @@ class Reservation:
 
     def book(self, date_of_reservation: date, seats: int, start_time: time, duration: time):
         available_rooms = self.find_available_rooms(date_of_reservation, seats, start_time, duration)
-        best_room = self.choose_best_room(available_rooms)
+        best_room = choose_best_room(available_rooms)
         self.reserve(best_room)
 
     def reserve(self, option: Option):
@@ -131,6 +135,3 @@ class Reservation:
         self.browser.find_element_by_name('ctl00$Main$SelectOptionButton').click()
         if not self.debug:
             self.browser.find_element_by_name('ctl00$Main$MakeBookingBtn').click()
-
-    def choose_best_room(self, options: list) -> Option:
-        return options[0]
